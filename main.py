@@ -5,29 +5,32 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.togglebutton import ToggleButton
 
 class MainApp(App):
-
-
+'''The layout of the buttons in app'''
     def build(self):
         layout = BoxLayout(padding=10)
         birdButton = ToggleButton(text='Birds',)
         birdButton.bind(on_press_button=self.on_press_button)
         layout.add_widget(birdButton)
 
-        oceanButton = ToggleButton(text='Ocean',
+        self.oceanButton = ToggleButton(text='Ocean',
         background_normal='C:/Users/micha/Desktop/Code/Soothing Sounds/picture/oceanpic.jpg')
-        oceanButton.bind(on_press=self.on_press_button)
-        layout.add_widget(oceanButton)
+        self.oceanButton.bind(on_press=self.on_press_button)
+        layout.add_widget(self.oceanButton)
 
         return layout
 
-
+'''Logic for the button press to start and stop'''
     def on_press_button(self, instance):
         waveSound = SoundLoader.load(
              'C:/Users/micha/Desktop/Code/Soothing Sounds/sounds/ocean.wav'
             )
-        waveSound.play()
-        waveSound.loop = True
-        print('You pressed the button!')
+        
+        if self.oceanButton.state == 'down':
+            waveSound.play()
+            waveSound.loop = True
+        else:
+            waveSound.stop()
+
 
 if __name__ == '__main__':
     app = MainApp()
