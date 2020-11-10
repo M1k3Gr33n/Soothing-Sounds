@@ -7,30 +7,38 @@ from kivy.uix.togglebutton import ToggleButton
 kivy.require('1.10.1')
 
 class MainApp(App):
-    '''The layout of the buttons in app'''
+    '''Buttons that appear on homescreen and what happens to button
+    when pressed'''
     def build(self):
         layout = BoxLayout(padding=10,orientation='vertical')
-        self.rainButton = ToggleButton(text='Rain',
+        self.rainButton = ToggleButton(
         background_normal='picture/rain.jpg',
         background_down='picture/rainpressed.jpg')        
         self.rainButton.bind(on_press=self.on_press_button_rain)
         layout.add_widget(self.rainButton)
 
-        self.oceanButton = ToggleButton(text='Ocean',
+        self.oceanButton = ToggleButton(
         background_normal='picture/oceanpic.jpg',
         background_down='picture/oceanpicpressed.jpg')
         self.oceanButton.bind(on_press=self.on_press_button_ocean)
         layout.add_widget(self.oceanButton)
 
-        self.birdsButton = ToggleButton(text='Birds',
+        self.birdsButton = ToggleButton(
         background_normal='picture/birds.jpg',
         background_down='picture/birdspressed.jpg')
         self.birdsButton.bind(on_press=self.on_press_button_bird)
         layout.add_widget(self.birdsButton)
 
+        self.fireplaceButton = ToggleButton(
+        background_normal='picture/fire.jpg',
+        background_down='picture/firepressed.jpg')
+        self.fireplaceButton.bind(on_press=self.on_press_button_fireplace)
+        layout.add_widget(self.fireplaceButton)
+
         return layout
 
     '''Logic for the button press to start and stop'''
+
     def on_press_button_ocean(self, *args):
         if self.oceanButton.state == 'down':
             self.waveSound = SoundLoader.load(
@@ -64,6 +72,16 @@ class MainApp(App):
         else:
             self.birdsSound.stop()
 
+    def on_press_button_fireplace(self, *args):
+        if self.fireplaceButton.state == 'down':
+            self.fireplaceSound = SoundLoader.load(
+            'sounds/Fireplace-SoundBible.com-127901833.wav'
+            )
+            self.fireplaceSound.play()
+            self.fireplaceSound.loop = True
+            self.fireplaceSound.volume = .7
+        else:
+            self.fireplaceSound.stop()
 
 if __name__ == '__main__':
     app = MainApp()
